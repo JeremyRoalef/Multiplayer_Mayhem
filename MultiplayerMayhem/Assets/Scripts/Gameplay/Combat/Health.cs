@@ -25,7 +25,7 @@ public class Health : NetworkBehaviour
 
     public void TakeDamage(int damageToTake)
     {
-        ModifyHealth(damageToTake);
+        ModifyHealth(-damageToTake);
     }
 
     public void RestoreHealth(int healthAmount)
