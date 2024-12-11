@@ -20,14 +20,27 @@ public class PlayerShooter : NetworkBehaviour
     [SerializeField]
     GameObject clientProjectilePrefab;
 
+    [SerializeField]
+    GameObject muzzleFlash;
+
+    [SerializeField]
+    Collider2D playerCollider;
+
 
     [Header("Settings")]
 
     [SerializeField]
     float projectileSpeed;
 
+    [SerializeField]
+    float fireRate = 1f;
+
+    [SerializeField]
+    float muzzleFlashDuration = 0.5f;
 
     bool isFiring;
+    float previousFireTime;
+    float muzzleFlashTimer;
 
     public override void OnNetworkSpawn()
     {
@@ -47,20 +60,44 @@ public class PlayerShooter : NetworkBehaviour
 
     void Update()
     {
+        if (muzzleFlashTimer > 0)
+        {
+            muzzleFlashTimer -= Time.deltaTime;
+        }
+        if (muzzleFlashTimer <= 0)
+        {
+            muzzleFlash.SetActive(false);
+        }
+
+
+
         if (!IsOwner) { return; }
         if (!isFiring) { return; }
+        if (Time.time < (1 / fireRate) + previousFireTime) { return; }
 
         PrimaryFireServerRpc(projectileSpawnpoint.position, projectileSpawnpoint.up);
         SpawnProjectile(projectileSpawnpoint.position, projectileSpawnpoint.up);
 
+        previousFireTime = Time.time;
     }
 
     //This will instantiate projectiles on YOUR screen, but not others' screens
     //To see the projectile on others' screens, need client & server Rpc (see below)
     void SpawnProjectile(Vector3 spawnPos, Vector3 dirToMove)
     {
+        muzzleFlash.SetActive(true);
+        muzzleFlashTimer = muzzleFlashDuration;
+
         GameObject projectile =  Instantiate(clientProjectilePrefab, spawnPos, Quaternion.identity);
         projectile.transform.up = dirToMove;
+
+
+        Physics2D.IgnoreCollision(playerCollider, projectile.GetComponent<Collider2D>());
+
+        if (projectile.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))
+        {
+            rb.velocity = rb.transform.up * projectileSpeed;
+        }
     }
 
     void HandlePrimaryFire(bool isFiring)
@@ -76,6 +113,13 @@ public class PlayerShooter : NetworkBehaviour
         projectile.transform.up = dirToMove;
 
         PrimaryFireClientRpc(spawnPos, dirToMove);
+
+        Physics2D.IgnoreCollision(playerCollider, projectile.GetComponent<Collider2D>());
+
+        if (projectile.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))
+        {
+            rb.velocity = rb.transform.up * projectileSpeed;
+        }
     }
 
     //This will show the projectil on the client's screen
@@ -85,7 +129,6 @@ public class PlayerShooter : NetworkBehaviour
         //owner does not need to see this
         if (IsOwner) { return; }
 
-        GameObject projectile = Instantiate(clientProjectilePrefab, spawnPos, Quaternion.identity);
-        projectile.transform.up = dirToMove;
+        SpawnProjectile(spawnPos, dirToMove);
     }
 }
