@@ -116,6 +116,12 @@ public class PlayerShooter : NetworkBehaviour
 
         Physics2D.IgnoreCollision(playerCollider, projectile.GetComponent<Collider2D>());
 
+        //Set the owner id of the projectile to this game object's id
+        if (projectile.TryGetComponent<DamageOnContact>(out DamageOnContact dealDamage))
+        {
+            dealDamage.SetOwner(OwnerClientId);
+        }
+
         if (projectile.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))
         {
             rb.velocity = rb.transform.up * projectileSpeed;
