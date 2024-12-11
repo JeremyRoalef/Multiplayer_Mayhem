@@ -26,6 +26,8 @@ public class PlayerShooter : NetworkBehaviour
     [SerializeField]
     Collider2D playerCollider;
 
+    [SerializeField]
+    CoinWallet wallet;
 
     [Header("Settings")]
 
@@ -38,9 +40,13 @@ public class PlayerShooter : NetworkBehaviour
     [SerializeField]
     float muzzleFlashDuration = 0.5f;
 
+    [SerializeField]
+    int costToFire;
+
     bool isFiring;
     float previousFireTime;
     float muzzleFlashTimer;
+    float timer;
 
     public override void OnNetworkSpawn()
     {
@@ -72,13 +78,20 @@ public class PlayerShooter : NetworkBehaviour
 
 
         if (!IsOwner) { return; }
+
+        if (timer > 0)
+        {
+            timer -= Time.deltaTime;
+        }
+
         if (!isFiring) { return; }
-        if (Time.time < (1 / fireRate) + previousFireTime) { return; }
+        if (timer > 0) { return; }
+        if (wallet.TotalCoins.Value < costToFire) { return; }
 
         PrimaryFireServerRpc(projectileSpawnpoint.position, projectileSpawnpoint.up);
         SpawnProjectile(projectileSpawnpoint.position, projectileSpawnpoint.up);
 
-        previousFireTime = Time.time;
+        timer = 1/fireRate;
     }
 
     //This will instantiate projectiles on YOUR screen, but not others' screens
@@ -109,6 +122,10 @@ public class PlayerShooter : NetworkBehaviour
     [ServerRpc]
     void PrimaryFireServerRpc(Vector3 spawnPos, Vector3 dirToMove)
     {
+        if (wallet.TotalCoins.Value < costToFire) { return; }
+
+        wallet.SpendCoins(costToFire);
+
         GameObject projectile = Instantiate(serverProjectilePrefab, spawnPos, Quaternion.identity);
         projectile.transform.up = dirToMove;
 

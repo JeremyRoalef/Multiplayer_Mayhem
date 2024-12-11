@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9084989230641397176}
   - component: {fileID: 6096863067214818931}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5852261413039344612}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ProjectileSpawnpoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,7 +112,7 @@ GameObject:
   - component: {fileID: 995264235169231272}
   - component: {fileID: 7762130992062406125}
   - component: {fileID: -5277355315332977175}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -262,9 +262,11 @@ MonoBehaviour:
   clientProjectilePrefab: {fileID: 2725032682531744004, guid: 8c57ee69a505f414cb848c09fb25a424, type: 3}
   muzzleFlash: {fileID: 3360085420109809069}
   playerCollider: {fileID: 7762130992062406125}
+  wallet: {fileID: -5277355315332977175}
   projectileSpeed: 30
   fireRate: 1
   muzzleFlashDuration: 0.5
+  costToFire: 1
 --- !u!114 &995264235169231272
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -349,7 +351,7 @@ GameObject:
   m_Component:
   - component: {fileID: 721258781756199721}
   - component: {fileID: 3364956388206153679}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -434,7 +436,7 @@ GameObject:
   - component: {fileID: 5580099227819973670}
   - component: {fileID: 5704587729882005957}
   - component: {fileID: 726467617412369434}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Overhead Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -509,7 +511,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8791815119913900219}
   - component: {fileID: 5446570263568918079}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -595,7 +597,7 @@ GameObject:
   m_Component:
   - component: {fileID: 480874986339602440}
   - component: {fileID: 2152321574855030787}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: MuzzleFlash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -680,7 +682,7 @@ GameObject:
   - component: {fileID: 5244313643038998908}
   - component: {fileID: 2711908690953140645}
   - component: {fileID: 6199344301953272487}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Treads
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -796,7 +798,7 @@ GameObject:
   - component: {fileID: 1758071196025131812}
   - component: {fileID: 7733959822548215455}
   - component: {fileID: 8748767840853728703}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: HealthBarImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
