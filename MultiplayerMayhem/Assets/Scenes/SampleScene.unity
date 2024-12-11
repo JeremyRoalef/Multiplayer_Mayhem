@@ -184,7 +184,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 10.86
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -544,7 +544,7 @@ MonoBehaviour:
   NetworkConfig:
     ProtocolVersion: 0
     NetworkTransport: {fileID: 1067275147}
-    PlayerPrefab: {fileID: 2722821721227158803, guid: 7da430619187b174c9ace78b38ec0088, type: 3}
+    PlayerPrefab: {fileID: 2443613327469637844, guid: 7da430619187b174c9ace78b38ec0088, type: 3}
     Prefabs:
       NetworkPrefabsLists:
       - {fileID: 11400000, guid: 67cc81282731a234b984ff9618e911e0, type: 2}
