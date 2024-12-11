@@ -11,8 +11,12 @@ using static Controls;
 //IPlayerActions comes from the controls input system created in unity Input folder
 public class InputReaderSO : ScriptableObject, IPlayerActions
 {
+    //Events for shooting and moving
     public event Action<bool> PrimaryFireEvent;
     public event Action<Vector2> MoveEvent;
+
+    //Property for mouse aim position
+    public Vector2 AimPosition {  get; private set; }
 
     //Input System
     private Controls controls;
@@ -47,6 +51,12 @@ public class InputReaderSO : ScriptableObject, IPlayerActions
         {
             PrimaryFireEvent?.Invoke(false);
         }
+    }
+
+    public void OnAim(InputAction.CallbackContext context)
+    {
+        //Set value to the context value
+        AimPosition = context.ReadValue<Vector2>();
     }
 }
 
