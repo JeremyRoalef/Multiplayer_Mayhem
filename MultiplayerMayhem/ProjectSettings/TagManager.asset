@@ -14,8 +14,8 @@ TagManager:
   - Player
   - Projectile
   - Pickup
-  - 
-  - 
+  - Terrain
+  - Wall
   - 
   - 
   - 
@@ -38,11 +38,14 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 3539927631
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Background
-    uniqueID: 3539927631
+  - name: Terrain
+    uniqueID: 3064304493
     locked: 0
   - name: Coin
     uniqueID: 1404463853
