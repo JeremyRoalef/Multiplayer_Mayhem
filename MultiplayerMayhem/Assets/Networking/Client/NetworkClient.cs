@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class NetworkClient
+public class NetworkClient : IDisposable
 {
     const string MAINMENUNAME = "Menu";
 
@@ -16,6 +17,15 @@ public class NetworkClient
 
         //Triggered when someone connects to the server & gives info about the connection
         networkManager.OnClientDisconnectCallback += OnClientDisconnect;
+    }
+
+    //Interface setup
+    public void Dispose()
+    {
+        if (networkManager != null)
+        {
+            networkManager.OnClientConnectedCallback -= OnClientDisconnect;
+        }
     }
 
     private void OnClientDisconnect(ulong clientId)

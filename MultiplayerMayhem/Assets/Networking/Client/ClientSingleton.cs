@@ -39,4 +39,9 @@ public class ClientSingleton : MonoBehaviour
         //Wait to run code beneath the async method.
         return await GameManager.InitAsync();
     }
+
+    private void OnDestroy()
+    {
+        GameManager?.Dispose();
+    }
 }
