@@ -11,16 +11,23 @@ using Unity.Services.Relay;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Text;
+using Unity.Services.Authentication;
 
 public class ClientGameManager
 {
+
+
     const string MENUSCENENAME = "Menu";
     JoinAllocation allocation;
+    NetworkClient networkClient;
 
     //Async allows you to run the method asynchronous of the code running (Runs in background. Returns when it is done)
     public async Task<bool> InitAsync()
     {
         await UnityServices.InitializeAsync();
+
+        networkClient = new NetworkClient(NetworkManager.Singleton);
+
         //Authenticate player
         AuthState authState = await AuthenticationWrapper.DoAuth();
         if (authState == AuthState.Authenticated)
@@ -53,7 +60,8 @@ public class ClientGameManager
 
         UserData userData = new UserData()
         {
-            userName = PlayerPrefs.GetString(NameSelector.PLAYERNAMEKEY, "John Doe")
+            userName = PlayerPrefs.GetString(NameSelector.PLAYERNAMEKEY, "John Doe"),
+            userAuthId = AuthenticationService.Instance.PlayerId
         };
 
         //convert user data to json & bytearray

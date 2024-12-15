@@ -11,6 +11,7 @@ using Unity.Services.Relay.Models;
 using UnityEngine;
 using Unity.Services.Lobbies.Models;
 using System.Text;
+using Unity.Services.Authentication;
 
 public class HostGameManager
 {
@@ -82,7 +83,8 @@ public class HostGameManager
 
         UserData userData = new UserData()
         {
-            userName = PlayerPrefs.GetString(NameSelector.PLAYERNAMEKEY, "John Doe")
+            userName = PlayerPrefs.GetString(NameSelector.PLAYERNAMEKEY, "John Doe"),
+            userAuthId = AuthenticationService.Instance.PlayerId
         };
         //convert user data to json & bytearray
         string payload = JsonUtility.ToJson(userData);
